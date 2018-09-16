@@ -1,0 +1,10 @@
+19: b = Brewery.create(name: 'BrewDog', year: 2007)
+20: b.beers.create name: 'Punk IPA', style: 'IPA'
+21: b.beers.create name: 'Nanny State', style: 'lowalcohol'
+22: b.beers
+23: b.beers.first.ratings.create score: 15
+24: b.beers.first.ratings.create score: 29
+25: b.beers.first.ratings.create score: 31
+26: b.beers.last.ratings.create score: 11
+27: b.beers.last.ratings.create score: 9
+28: b.beers.last.ratings.create score: 42
