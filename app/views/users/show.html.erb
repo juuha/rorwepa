@@ -6,7 +6,7 @@
 
 <p>
   <% if @user.ratings.count != 0%>
-    Has made <%= @user.ratings.count%>, average rating <%= @user.average_rating%>.
+    Has made <%= pluralize(@user.ratings.count, "rating")%>, average rating <%= @user.average_rating%>.
   <% else %>
     Has not yet made ratings.
   <% end%>

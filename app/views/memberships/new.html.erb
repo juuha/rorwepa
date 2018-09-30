@@ -1,5 +1,18 @@
 <h1>New Membership</h1>
 
-<%= render 'form', membership: @membership %>
+<%= form_for(@rating) do |f|%>
+  <% if @rating.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rating.errors.count, "error") %> prohibited rating from being saved:</h2>
 
-<%= link_to 'Back', memberships_path %>
+      <ul>
+      <% @rating.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+  <% end %>
+  <%= f.select :beer_club_id, options_from_collection_for_select(@beer_clubs, :id, :name) %>
+  <%= f.submit%>
+
+  <%= link_to 'Back', memberships_path %>
+<% end %>
