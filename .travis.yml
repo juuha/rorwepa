@@ -11,3 +11,4 @@ deploy:
   app: super-beer-123
   on:
     repo: juuha/rorwepa
+  run: "rails db:migrate"
