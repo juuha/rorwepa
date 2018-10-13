@@ -26,22 +26,44 @@ describe "Rating" do
     expect(beer1.average_rating).to eq(15.0)
   end
 
-  it "lists existing ratings and their total number" do
-    FactoryBot.create :rating, score: 10, beer:beer1, user:user
-    FactoryBot.create :rating, score: 15, beer:beer1, user:user
-    FactoryBot.create :rating, score: 20, beer:beer1, user:user
+  describe "when many ratings are given" do
+    let!(:user) { FactoryBot.create :user }
 
-    visit ratings_path
-    expect(page).to have_content "Number of ratings: 3"
-  end
+    before :each do
+      schlenkerla = FactoryBot.create :brewery, name: 'Schlenkerla'
+      create_beer_with_rating({ user: user, style: 'Rauchbier', brewery: schlenkerla }, 20)
+      create_beer_with_rating({ user: user }, 10)
+      user2 = FactoryBot.create :user, username: "Hemmo"
+      create_beers_with_many_ratings({ user: user2 }, 7, 9, 15)
+    end
+  
+    it "lists existing ratings and their total number" do
+      visit ratings_path
+      expect(page).to have_content "Number of ratings: 5"
+      expect(page).to have_content "anonymous 10 Pekka"
+      expect(page).to have_content "anonymous 20 Pekka"
+      expect(page).to have_content "anonymous 7 Hemmo"
+      expect(page).to have_content "anonymous 9 Hemmo"
+      expect(page).to have_content "anonymous 15 Hemmo"
+    end
 
-  it "lists only user's ratings on user's page" do
-    user2 = FactoryBot.create :user, username:"Hemmo"
-    FactoryBot.create :rating, score: 10, beer:beer1, user:user
-    FactoryBot.create :rating, score: 15, beer:beer1, user:user2
-    FactoryBot.create :rating, score: 12, beer:beer1, user:user
+    it "lists only user's ratings on user's page" do
+      visit user_path(user)
+      expect(page).to have_content "Has made 2 ratings"
+      expect(page).to have_content "anonymous 10"
+      expect(page).to have_content "anonymous 20"
+      expect(page).not_to have_content "anonymous 7"
+    end
 
-    visit user_path(user)
-    expect(page).to have_content "Has made 2 ratings"
+    it "when user removes a rating, it is deleted from database" do
+      sign_in( username: 'Pekka', password: 'Foobar1')
+      visit user_path(user)
+
+      delete_link = all('a').select{ |l| l.text=='delete' }.first
+
+      expect{
+        delete_link.click
+      }.to change{Rating.count}.by(-1)
+    end
   end
 end

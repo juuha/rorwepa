@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-require Helpers
+include Helpers
 
 RSpec.describe User, type: :model do
   it "has the username set correctly" do
