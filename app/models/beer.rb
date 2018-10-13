@@ -5,7 +5,7 @@ class Beer < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :raters, -> { distinct }, through: :ratings, source: :user
 
-  validates :name, length: { minimum: 1 }
+  validates :name, length: { minimum: 1 }, presence: true
   validates :style, length: { minimum: 1 }
 
   def average

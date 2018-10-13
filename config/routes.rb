@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :beers
   resources :breweries
+  resources :places, only: [:index, :show]
+
+  post 'places', to:'places#search'
 
   root 'breweries#index'
   get 'kaikki_bisset', to: 'beers#index'

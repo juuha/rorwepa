@@ -1,28 +1,30 @@
 require 'rails_helper'
 
-describe "Beer" do
-  let!(:brewery) { FactoryBot.create :brewery, name:"Koff" }
+include Helpers
 
-  it "is saved when given proper name" do
-    visit new_beer_path
-    fill_in('beer[name]', with:'Karhu')
-    select('Lager', from:'beer[style]')
-    select('Koff', from:'beer[brewery_id]')
-
-    expect{
-      click_button("Create Beer")
-    }.to change{Beer.count}.from(0).to(1)
+describe "Beer page" do
+  before :each do 
+    FactoryBot.create(:brewery)
+    FactoryBot.create(:user)
+    sign_in(username: "Pekka", password: "Foobar1")
   end
 
-  it "is not saved when given an invalid name" do
-    visit new_beer_path
-    fill_in('beer[name]', with:'')
-    select('Lager', from:'beer[style]')
-    select('Koff', from:'beer[brewery_id]')
+  it "a beer can be saved with valid input" do
+      visit new_beer_path
+      fill_in('beer[name]', with:'Keppana')
 
-    expect{
-      click_button("Create Beer")
-    }.to change{Beer.count}.by(0)
-    expect(page).to have_content "Name is too short"
+      expect{
+        click_button('Create Beer')
+      }.to change{Beer.count}.by(1)
   end
+
+  it "if name invalid, beer is not saved and a errormessage is given" do
+      visit new_beer_path
+
+      expect{
+        click_button('Create Beer')
+      }.to change{Beer.count}.by(0)
+
+      expect(page).to have_content "Name can't be blank"
+  end  
 end
