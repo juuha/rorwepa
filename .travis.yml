@@ -1,8 +1,13 @@
 language: ruby
-
 rvm:
 - 2.5.1
-
 script:
 - bundle exec rails db:migrate
 - bundle exec rspec -fd spec
+deploy:
+  provider: heroku
+  api_key:
+    secure: wq9tB0u7IUIk6//KvRILQsH0UGTIloy8mP6hYkgtG7iqRMP9MUhUXqLoazqSqRTCmgC8y6jqhqEZkKoYzBtcETFMLf++2SuylAUtWL3hV4PLuqozcoTDxjsZB0tEV3xuk2RXJLPZDq1mXGwZgTEXvAyOGW9rX9vyOMxXiaNZtSxYqHb2UtqhO8l8iASS3SerEuUubiVRP787TE3tT8W8Dss3Sh/waYkTlrookWYt2mxiUoBWLOtFyRb7RparN0iNXQb2NxsiYzcO2Hoe9OX4014wM8MOtzIRyW+FnReD7g786Rhu71nXJ5o+yo3NlWy1dqZgCIcf5duVmM4W3VGZhAa6g8OQddzK7svAGAYNOIll7iudwH7xkz/5L1HosS9H9N8w0mQtbW8PHsZgMO3brb8dKUsO4wJz4SA8DZnias4ObmQGzZbeNDglixohakwwG72Bwn4j+o5Nf1MjFLe/zWkbgwvyZF7qL09Swqf0gwEXQoKyWBrj1n4g1Dgx8ui3/Vx05SiHTckfPJ8WcwB36ura94gus8r5i3d30VHBo4j+Q25JBamXtCoJfrFkigL+MwZL+G674P31cjeijezNyB5aM0sic/qFnHeIwnFr/a5kIKL4PeOZZ+0n24/0yQdP+xZERbwqWVrfI2BUQKwdhx9uw7SdGBRr0P9q9YFOeYw=
+  app: super-beer-123
+  on:
+    repo: juuha/rorwepa
