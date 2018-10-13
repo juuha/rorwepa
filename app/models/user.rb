@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :ratings, dependent: :destroy
   has_many :beers, through: :ratings
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 
   validates :username, uniqueness: true,
@@ -13,7 +13,8 @@ class User < ApplicationRecord
                                  maximum: 30 }
 
   validates :password, length: { minimum: 4 },
-                       format: { with: /(.*([A-Z].*\d)|(\d.*[A-Z]).*)/, message: "Must contain at least one number and one capital letter." }
+                       format: { with: /(.*([A-Z].*\d)|(\d.*[A-Z]).*)/,
+                                 message: "Must contain at least one number and one capital letter." }
 
   def favorite_beer
     return nil if ratings.empty?

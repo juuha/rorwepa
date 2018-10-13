@@ -19,7 +19,7 @@ class BeersController < ApplicationController
   end
 
   # GET /beers/1/edit
-  def edit 
+  def edit
   end
 
   # POST /beers

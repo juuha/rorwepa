@@ -12,6 +12,17 @@
   <% end%>
 </p>
 
+<p>
+  <% if @user.beer_clubs.any? %>
+    member of
+    <ul>
+      <% @user.beer_clubs.each do |bc| %>
+        <li> <%= link_to bc.name, bc %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</p>
+
 <h3> ratings </h3>
 <ul>
   <% @user.ratings.each do |rating| %>
