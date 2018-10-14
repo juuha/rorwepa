@@ -7,6 +7,8 @@ class Rating < ApplicationRecord
                                     only_integer: true }
 
   def to_s
-    "#{beer.name} #{score}"
+    "#{beer.name} --- #{score}, by #{user.username} at #{created_at}"
   end
+
+  scope :recent, -> { Rating.order(:updated_at).last(3).reverse }
 end

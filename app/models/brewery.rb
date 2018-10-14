@@ -11,10 +11,17 @@ class Brewery < ApplicationRecord
                                    less_than_or_equal_to: @p.call,
                                    only_integer: true }
 
+  scope :active, -> { where active: true }
+  scope :inactive, -> { where active: [nil, false] }
+
   def print_report
     puts name
     puts "established at year #{year}"
     puts "number of beers #{beers.count}"
+  end
+
+  def self.top(num)
+    Brewery.all.sort_by{ |b| - b.average_rating }[0..(num - 1)]
   end
 
   def restart

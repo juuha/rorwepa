@@ -21,4 +21,8 @@ class User < ApplicationRecord
 
     ratings.order(score: :desc).limit(1).first.beer
   end
+
+  def self.top(num)
+    User.all.sort_by{ |u| -u.ratings.count }[0..(num - 1)]
+  end
 end

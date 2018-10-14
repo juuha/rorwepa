@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
-  resources :users
+  resources :users do
+    post 'toggle_closed', on: :member
+  end
   resource :session, only: [:new, :create, :destroy]
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :beers
-  resources :breweries
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
   resources :places, only: [:index, :show]
 
   post 'places', to:'places#search'
