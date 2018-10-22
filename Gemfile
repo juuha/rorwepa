@@ -72,7 +72,6 @@ end
 
 group :test do
   gem 'factory_bot_rails'
-  gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'factory_bot_rails'
   gem 'launchy'
