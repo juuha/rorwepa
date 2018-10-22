@@ -73,7 +73,6 @@ end
 group :test do
   gem 'factory_bot_rails'
   gem 'chromedriver-helper'
-  gem 'factory_bot_rails'
   gem 'launchy'
   gem 'webmock'
 end
