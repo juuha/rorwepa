@@ -1,46 +1,50 @@
 <h1> Ratings </h1>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h3>Best beers </h3>
+<% cache 'ratinglist', skip_digest: true, expires_in:10.minutes do %>
 
-      <%= render 'top_three', items: @top_beers %>
-    </div>
-    <div class="col">
-      <h3>Best breweries </h3>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>Best beers </h3>
 
-      <%= render 'top_three', items: @top_breweries %>
+        <%= render 'top_three', items: @top_beers %>
+      </div>
+      <div class="col">
+        <h3>Best breweries </h3>
+
+        <%= render 'top_three', items: @top_breweries %>
+      </div>
     </div>
   </div>
-</div>
 
-<h3> Most active users </h3>
+  <h3> Most active users </h3>
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th></th>
-    <th>ratings</th>
-  </tr>
-  </thead>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>ratings</th>
+    </tr>
+    </thead>
 
-  <tbody>
-  <% @top_users.each do |user| %>
-      <tr>
-        <td><%= link_to user.username, user %></td>
-        <td><%= user.ratings.count %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    <tbody>
+    <% @top_users.each do |user| %>
+        <tr>
+          <td><%= link_to user.username, user %></td>
+          <td><%= user.ratings.count %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-<h3>Recent ratings </h3>
-<ul>
-  <% @recent_ratings.each do |rating| %>
-    <li> <%= rating %> </li>
-  <% end %>
-</ul>
+  <h3>Recent ratings </h3>
+  <ul>
+    <% @recent_ratings.each do |rating| %>
+      <li> <%= rating %> </li>
+    <% end %>
+  </ul>
+
+<% end %>
 
 <% if current_user %>
   <%= link_to('New Rating', new_rating_path, class:"btn btn-success" )%>

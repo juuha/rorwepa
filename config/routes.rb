@@ -12,12 +12,17 @@ Rails.application.routes.draw do
   end
   resources :places, only: [:index, :show]
 
-  post 'places', to:'places#search'
-
   root 'breweries#index'
   get 'kaikki_bisset', to: 'beers#index'
   get 'signup', to: 'users#new'
   get 'signin', to: 'sessions#new'
+  get 'beerlist', to:'beers#list'
+  get 'brewerylist', to:'breweries#list'
+
+  get 'auth/:provider/callback', to: 'sessions#create_oauth'
+
+  post 'places', to:'places#search'
+
   delete 'signout', to: 'sessions#destroy'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

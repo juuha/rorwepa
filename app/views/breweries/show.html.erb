@@ -1,3 +1,5 @@
+<% cache @ brewery do %>
+
 <h2>
   <%= @brewery.name %>
   <% if not @brewery.active %>
@@ -27,6 +29,8 @@
   Has <%= pluralize(@brewery.ratings.count, 'rating')%>, average <%= round @brewery.average_rating %>
 <% end %>
 </p>
+
+<% end %>
 
 <%= link_to('Back', breweries_path,  class:"btn btn-light") %>
 <% if current_user %>

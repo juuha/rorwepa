@@ -1,4 +1,5 @@
 class Brewery < ApplicationRecord
+  extend TopN
   include RatingAverage
 
   has_many :beers, dependent: :destroy
@@ -21,7 +22,7 @@ class Brewery < ApplicationRecord
   end
 
   def self.top(num)
-    Brewery.all.sort_by{ |b| - b.average_rating }[0..(num - 1)]
+    top_refractored(num)
   end
 
   def restart
